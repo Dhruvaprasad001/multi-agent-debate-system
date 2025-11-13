@@ -296,26 +296,6 @@ Uses LangGraph's SQLite checkpointer to maintain conversation history across ses
 
 ---
 
-## 🧪 Testing
-
-Run the test suite:
-
-```bash
-# Run all tests
-pytest
-
-# Run with coverage
-pytest --cov=src
-
-# Run specific test file
-pytest tests/test_agents.py
-
-# Verbose output
-pytest -v
-```
-
----
-
 ## 🤝 Contributing
 
 Contributions are welcome! Here's how you can help:
@@ -347,38 +327,6 @@ For more detailed information:
 
 ---
 
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**Issue**: `ModuleNotFoundError: No module named 'src'`
-```bash
-# Solution: Run from project root
-cd /path/to/multi-agent-debate-system
-python scripts/run_debate.py ...
-```
-
-**Issue**: API key errors
-```bash
-# Solution: Ensure .env file exists and contains valid keys
-cp env.example .env
-# Edit .env with your actual API keys
-```
-
-**Issue**: Unicode errors on Windows
-```bash
-# Solution: Script already handles UTF-8 encoding
-# If issues persist, set: $env:PYTHONIOENCODING="utf-8"
-```
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
 ## 🙏 Acknowledgments
 
 - [LangChain](https://github.com/langchain-ai/langchain) - Framework for LLM applications
@@ -394,11 +342,4 @@ Questions? Suggestions? Open an issue or reach out!
 
 ---
 
-<div align="center">
-
-**Built with ❤️ using LangChain and LangGraph**
-
-⭐ Star this repo if you find it useful!
-
-</div>
 
