@@ -21,6 +21,14 @@ def main():
 
 	args = parser.parse_args()
 
+	# Print header
+	print("\n" + "=" * 60)
+	print("       🎭 MULTI-AGENT DEBATE SYSTEM 🎭")
+	print("=" * 60)
+	print(f"Topic: {args.topic}")
+	print(f"Max Rounds: {args.rounds}")
+	print("=" * 60)
+
 	logger.info(f"Starting debate on: {args.topic}")
 
 	# Create and run debate
@@ -42,15 +50,13 @@ def main():
 	final_state = None
 	for update in graph.stream(initial_state, config):
 		final_state = update
-		# Print node updates for debugging
-		node_name = list(update.keys())[0] if update else "unknown"
-		logger.info(f"Completed node: {node_name}")
 
 	# Format and print results
 	if final_state:
 		result = list(final_state.values())[0]
-		logger.info(f"Final state - Round: {result.get('debate_round')}, Is Complete: {result.get('is_complete')}")
-		logger.info(f"Consensus length: {len(result.get('consensus', ''))}")
+		print("\n" + "=" * 60)
+		print("           🏁 DEBATE COMPLETE 🏁")
+		print("=" * 60)
 		print(format_debate_summary(result))
 
 

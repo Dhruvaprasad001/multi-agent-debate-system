@@ -18,6 +18,12 @@ mediator_agent = create_mediator_agent()
 def research_node(state: DebateState) -> DebateState:
 	"""Research agent node - gathers facts about the topic."""
 	topic = state["topic"]
+	
+	print("\n" + "=" * 60)
+	print("🔍 RESEARCH AGENT")
+	print("=" * 60)
+	print(f"Researching: {topic}...")
+	
 	result = research_agent.invoke({
 		"messages": [{"role": "user", "content": f"Research the topic: {topic}"}]
 	})
@@ -29,6 +35,7 @@ def research_node(state: DebateState) -> DebateState:
 		state["messages"] = state.get("messages", []) + [
 			{"role": "assistant", "name": "research_agent", "content": research_content}
 		]
+		print(f"\n{research_content}\n")
 	
 	return state
 
@@ -38,6 +45,11 @@ def optimist_node(state: DebateState) -> DebateState:
 	topic = state["topic"]
 	research = state.get("research_facts", "")
 	context = f"Topic: {topic}\nResearch: {research}\nRound: {state['debate_round']}"
+	
+	print("\n" + "=" * 60)
+	print(f"✅ OPTIMIST AGENT - Round {state['debate_round']}")
+	print("=" * 60)
+	print("Formulating positive arguments...")
 	
 	result = optimist_agent.invoke({
 		"messages": [{"role": "user", "content": context}]
@@ -49,6 +61,7 @@ def optimist_node(state: DebateState) -> DebateState:
 		state["messages"] = state.get("messages", []) + [
 			{"role": "assistant", "name": "optimist_agent", "content": argument}
 		]
+		print(f"\n{argument}\n")
 	
 	return state
 
@@ -60,6 +73,11 @@ def critic_node(state: DebateState) -> DebateState:
 	optimist_args = state.get("optimist_arguments", [])
 	context = f"Topic: {topic}\nResearch: {research}\nOptimist's arguments: {optimist_args[-1] if optimist_args else 'None'}\nRound: {state['debate_round']}"
 	
+	print("\n" + "=" * 60)
+	print(f"❌ CRITIC AGENT - Round {state['debate_round']}")
+	print("=" * 60)
+	print("Formulating counter-arguments...")
+	
 	result = critic_agent.invoke({
 		"messages": [{"role": "user", "content": context}]
 	})
@@ -70,6 +88,7 @@ def critic_node(state: DebateState) -> DebateState:
 		state["messages"] = state.get("messages", []) + [
 			{"role": "assistant", "name": "critic_agent", "content": counter}
 		]
+		print(f"\n{counter}\n")
 	
 	return state
 
@@ -80,6 +99,11 @@ def mediator_node(state: DebateState) -> DebateState:
 	optimist_args = state.get("optimist_arguments", [])
 	critic_args = state.get("critic_arguments", [])
 	context = f"Topic: {topic}\nRound: {state['debate_round']}/{state['max_rounds']}\nOptimist's arguments: {optimist_args}\nCritic's arguments: {critic_args}\n\nProvide a synthesis and decide if we need more debate rounds."
+	
+	print("\n" + "=" * 60)
+	print(f"⚖️  MEDIATOR AGENT - Round {state['debate_round']}/{state['max_rounds']}")
+	print("=" * 60)
+	print("Synthesizing arguments...")
 	
 	result = mediator_agent.invoke({
 		"messages": [{"role": "user", "content": context}]
@@ -99,6 +123,7 @@ def mediator_node(state: DebateState) -> DebateState:
 		state["messages"] = state.get("messages", []) + [
 			{"role": "assistant", "name": "mediator_agent", "content": mediator_response}
 		]
+		print(f"\n{mediator_response}\n")
 	
 	return state
 
